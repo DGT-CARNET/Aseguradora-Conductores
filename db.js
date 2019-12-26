@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const DB_URL = (process.env.MONGO_URL || 'mongobd://mongo/test');
+const DB_URL = (process.env.MONGO_URL || 'mongodb+srv://Jesusmtorres97:uniUS2015@carnetapi-fy9hz.mongodb.net/test?retryWrites=true&w=majority');
 
 const dbConnect = function() {
     const db = mongoose.connection;

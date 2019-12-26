@@ -5,11 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Daniel Castilla",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "jest": "^24.9.0",
+    "jest-extended": "^0.11.2",
+    "mongoose": "^5.8.3",
+    "supertest": "^4.0.2"
   }
 }

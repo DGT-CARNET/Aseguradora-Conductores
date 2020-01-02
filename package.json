@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "API drivers",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrchavea/Aseguradora-Conductores.git"
+  },
+  "homepage": "https://github.com/mrchavea/Aseguradora-Conductores",
   "scripts": {
     "start": "node index.js",
     "test": "jest"

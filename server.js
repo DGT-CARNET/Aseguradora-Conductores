@@ -53,7 +53,6 @@ app.post(BASE_API_PATH + "/new_carnet/:name", (req, res) => {
             console.log(Date() + " - " + err);
             res.sendStatus(500);
         } else {
-            Carnet.put({name: req.params.name})
             res.sendStatus(201);
         }
     });

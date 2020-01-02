@@ -15,7 +15,7 @@ app.get("/" , (req,res) =>{
 });
 
 //Listado de carnets
-app.get("/traffic_management", (req, res) => {
+app.get(BASE_API_PATH, (req, res) => {
     console.log(Date() + "- GET /carnets_list");
 
     Carnet.find({}, (err, carnets) => {
@@ -31,7 +31,7 @@ app.get("/traffic_management", (req, res) => {
 });
 
 //Añadir un carnet
-app.post(BASE_API_PATH + "/traffic_management", (req, res) => {
+app.post(BASE_API_PATH, (req, res) => {
     console.log(Date() + "- POST /new_carnet");
     var carnet = req.body;
     Carnet.create(carnet, (err) => {
@@ -44,8 +44,18 @@ app.post(BASE_API_PATH + "/traffic_management", (req, res) => {
     });
 });
 
+//Retirar un carnet
+app.put(BASE_API_PATH + "/retire/:DNI", (req,res)=>{
+    //Añadir control de errores
+    console.log(Date() + "- PUT /retire_carnet");
+    Carnet.findOneAndUpdate({DNI: req.params.DNI},{ valido: "false"}) 
+    res.sendStatus(200);
+});
+
 //Cambiar validez de un carnet
 
 //Borrar un carnet
+
+//Editar un carnet
 
 module.exports = app;

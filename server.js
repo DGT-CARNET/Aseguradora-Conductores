@@ -15,7 +15,7 @@ app.get("/" , (req,res) =>{
 });
 
 //Listado de carnets
-app.get(BASE_API_PATH + "/carnets_list", (req, res) => {
+app.get(BASE_API_PATH, (req, res) => {
     console.log(Date() + "- GET /carnets_list");
 
     Carnet.find({}, (err, carnets) => {
@@ -45,7 +45,7 @@ app.get(BASE_API_PATH + "/:DNI", (req, res) => {
 });
 
 //Añadir un carnet
-app.post(BASE_API_PATH + "/new_carnet/:name", (req, res) => {
+app.post(BASE_API_PATH, (req, res) => {
     console.log(Date() + "- POST /new_carnet");
     var carnet = req.body;
     //TODO: Comprobar que el DNI es valido y que no existe ya en BD
@@ -84,7 +84,7 @@ app.put(BASE_API_PATH + "/retire/:DNI", (req,res)=>{
 app.put(BASE_API_PATH + "/revalidate/:DNI", (req,res)=>{
     //Añadir control de errores
     console.log(Date() + "- PUT /revalidate_carnet");
-    Carnet.findOneAndUpdate({DNI: req.params.DNI},{ valido: "true"},{new: true}).then(function(carnet){
+    Carnet.findByIdAndUpdate({DNI: req.params.DNI},{ valido: "true"},{new: true}).then(function(carnet){
         res.send(carnet)
     });
     //Llamar metodo de poner puntos al minimo

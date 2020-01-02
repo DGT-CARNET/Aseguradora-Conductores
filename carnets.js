@@ -10,7 +10,7 @@ const carnetSchema = new mongoose.Schema({
 });
 
 carnetSchema.methods.cleanup = function() {
-    return {name: this.name, surname: this.surname,valido:this.valido};
+    return {name: this.name, surname: this.surname,DNI: this.DNI, valido:this.valido};
 }
 
 const Carnets = mongoose.model('Carnet', carnetSchema);

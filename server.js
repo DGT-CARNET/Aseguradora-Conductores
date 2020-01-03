@@ -74,7 +74,7 @@ app.put(BASE_API_PATH + "/retire/:DNI", (req,res)=>{
     var Carnet = req.body;
     //Añadir control de errores
     console.log(Date() + "- PUT /retire_carnet");
-    Carnet.findOneAndUpdate({DNI: req.params.DNI},{ valido: "false"},{new: true}).then(function(carnet){
+    Carnet.findOneAndUpdate({DNI: req.params.DNI},{ valido: "false"},{new: true},{"upsert" : false}).then(function(carnet){
         res.send(carnet)
     });
     res.sendStatus(200);
@@ -84,7 +84,7 @@ app.put(BASE_API_PATH + "/retire/:DNI", (req,res)=>{
 app.put(BASE_API_PATH + "/revalidate/:DNI", (req,res)=>{
     //Añadir control de errores
     console.log(Date() + "- PUT /revalidate_carnet");
-    Carnet.findByIdAndUpdate({DNI: req.params.DNI},{ valido: "true"},{new: true}).then(function(carnet){
+    Carnet.findOneAndUpdate({DNI: req.params.DNI},{ valido: "true"},{new: true}).then(function(carnet){
         res.send(carnet)
     });
     //Llamar metodo de poner puntos al minimo

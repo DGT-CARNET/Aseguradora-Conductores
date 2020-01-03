@@ -71,10 +71,9 @@ app.post(BASE_API_PATH, (req, res) => {
 
 //Retirar un carnet
 app.put(BASE_API_PATH + "/retire/:DNI", (req,res)=>{
-    var Carnet = req.body;
     //Añadir control de errores
     console.log(Date() + "- PUT /retire_carnet");
-    Carnet.findOneAndUpdate({DNI: req.params.DNI},{ valido: "false"},{new: true},{"upsert" : false}).then(function(carnet){
+    Carnet.findOneAndUpdate({DNI: req.params.DNI},{ valido: "false"},{new: true}).then(function(carnet){
         res.send(carnet)
     });
     res.sendStatus(200);

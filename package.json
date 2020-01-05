@@ -15,6 +15,7 @@
   "author": "Daniel Castilla",
   "license": "ISC",
   "dependencies": {
+    "core-util-is": "^1.0.2",
     "express": "^4.17.1",
     "mongoose": "^5.8.4",
     "nodejs": "0.0.0"

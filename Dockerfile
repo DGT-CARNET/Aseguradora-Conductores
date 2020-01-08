@@ -14,6 +14,8 @@ COPY carnets.js .
 COPY jest.config.js .
 #COPY test/server.test.js .
 
+COPY travis.yml .
+
 EXPOSE 3001
 
 CMD npm start

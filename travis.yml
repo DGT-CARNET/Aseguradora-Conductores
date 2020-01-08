@@ -20,4 +20,3 @@ deploy:
         heroku container:release web -a aseguradora-conductores;
         #$HEROKU_APP_NAME;
     branch: master
-    #Cambiar a master cuanto antes

@@ -10,13 +10,15 @@ before_install:
 install:
     - npm install
 script:
-    #- npm test
+    - npm test
     - docker build -t aseguradora-conductores .
 deploy:
     provider: script
     skip_cleanup: true
     script: 
         heroku container:login;
-        heroku container:push web -a $HEROKU_APP_NAME;
-        heroku container:release web -a $HEROKU_APP_NAME;
+        heroku container:push web -a aseguradora-conductores;
+        #$HEROKU_APP_NAME;
+        heroku container:release web -a aseguradora-conductores
+        #$HEROKU_APP_NAME;
     branch: master

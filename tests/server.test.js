@@ -27,8 +27,8 @@ describe("Carnets API", () => {
 
         beforeAll(() => {
             const carnets = [
-                {"name":"Peter","surname":"Poter","valido":false,"DNI":"123"},
-                {"name":"POT","surname":"Poter","valido":false,"DNI":"2"}
+                new Carnet({"name":"Peter","surname":"Poter","valido":false,"DNI":"123"}),
+                new Carnet({"name":"POT","surname":"Poter","valido":false,"DNI":"2"})
             ];
 
             dbFind = jest.spyOn(Carnet, "find");
@@ -47,7 +47,7 @@ describe("Carnets API", () => {
     });
 
     describe('POST /carnets', () => {
-        const carnet = {name:"jesus", surname:"torres", valido:true, DNI: 12};
+        const carnet = new Carnet({name:"jesus", surname:"torres", valido:true, DNI: 12});
         let dbInsert;
         //let dbFindOne;
 

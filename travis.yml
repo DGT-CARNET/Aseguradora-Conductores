@@ -4,6 +4,7 @@ node_js:
     - "9"
 services:
     - docker
+    - mongodb
 before_install:
     - wget -q0- https://toolbelt.heroku.com/install.sh | sh
 install:
@@ -18,4 +19,3 @@ deploy:
         heroku container:push web -a $HEROKU_APP_NAME;
         heroku container:release web -a $HEROKU_APP_NAME;
     branch: master
-    #Cambiar a master cuanto antes

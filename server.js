@@ -24,7 +24,7 @@ app.get(BASE_API_PATH, (req, res) => {
             res.sendStatus(500);
         }else{
             res.send(carnets.map((carnet) => {
-                return carnet;
+                return carnet.cleanup();
             }));
         }
     });

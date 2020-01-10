@@ -14,7 +14,7 @@ carnetSchema.methods.cleanup = function() {
 }
 
 carnetSchema.methods.comprove_DNI= function(){
-    var numero, let, letra;
+    var numero, let1, letra;
     var expresion_regular_dni = /^[XYZ]?\d{5,8}[A-Z]$/;
 
     dni = this.dni.toUpperCase();
@@ -24,11 +24,11 @@ carnetSchema.methods.comprove_DNI= function(){
         numero = numero.replace('X', 0);
         numero = numero.replace('Y', 1);
         numero = numero.replace('Z', 2);
-        let = dni.substr(dni.length-1, 1);
+        let1 = dni.substr(dni.length-1, 1);
         numero = numero % 23;
         letra = 'TRWAGMYFPDXBNJZSQVHLCKET';
         letra = letra.substring(numero, numero+1);
-        if (letra != let) {
+        if (letra != let1) {
             //alert('Dni erroneo, la letra del NIF no se corresponde');
             return false;
         }else{

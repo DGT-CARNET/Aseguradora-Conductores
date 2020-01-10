@@ -8,6 +8,11 @@ COPY package-lock.json .
 RUN npm install
 
 COPY index.js .
+COPY server.js .
+COPY db.js .
+COPY carnets.js .
+COPY jest.config.js .
+#COPY test/server.test.js .
 
 EXPOSE 3001
 

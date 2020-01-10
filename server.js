@@ -50,8 +50,8 @@ app.post(BASE_API_PATH, (req, res) => {
     var carnet = req.body;
     //TODO: Comprobar que el DNI es valido y que no existe ya en BD
 
-   // Carnet.findOne({DNI:carnet.DNI}).then(function(carnet_in_BD){
-     //   if(!carnet_in_BD){
+   Carnet.findOne({DNI:carnet.DNI}).then(function(carnet_in_BD){
+       if(!carnet_in_BD){
             Carnet.create(carnet, (err) => {
                 if(err){
                     console.log(Date() + " - " + err);
@@ -60,12 +60,12 @@ app.post(BASE_API_PATH, (req, res) => {
                     res.sendStatus(201);
                 }
             });
-        //}
-        //else{
-          //  console.log("El DNI ya existe");
-            //res.sendStatus(403);
-        //}
-    //});
+        }
+        else{
+           console.log("El DNI ya existe");
+            res.sendStatus(403);
+        }
+    });
     
 });
 

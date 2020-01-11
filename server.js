@@ -49,24 +49,27 @@ app.post(BASE_API_PATH, (req, res) => {
     console.log(Date() + "- POST /new_carnet");
     var carnet = req.body;
     //TODO: Comprobar que el DNI es valido y que no existe ya en BD
-
-   Carnet.findOne({DNI:carnet.DNI}).then(function(carnet_in_BD){
-       if(!carnet_in_BD){
-            Carnet.create(carnet, (err) => {
-                if(err){
-                    console.log(Date() + " - " + err);
-                    res.sendStatus(500);
-                } else {
-                    res.sendStatus(201);
-                }
-            });
-        }
-        else{
-           console.log("El DNI ya existe");
-            res.sendStatus(403);
-        }
-    });
-    
+    if(carnet.DNI==""){
+        res.sendStatus(403);
+       }
+    else{
+        Carnet.findOne({DNI:carnet.DNI}).then(function(carnet_in_BD){
+            if(!carnet_in_BD){
+                 Carnet.create(carnet, (err) => {
+                     if(err){
+                         console.log(Date() + " - " + err);
+                         res.sendStatus(500);
+                     } else {
+                         res.sendStatus(201);
+                     }
+                 });
+             }
+             else{
+                console.log("El DNI ya existe");
+                 res.sendStatus(403);
+             }
+         });
+       }  
 });
 
 //Retirar un carnet
@@ -88,6 +91,31 @@ app.put(BASE_API_PATH + "/revalidate/:DNI", (req,res)=>{
     });
     //Llamar metodo de poner puntos al minimo
     res.sendStatus(200);
+});
+
+app.put(BASE_API_PATH + "/edit/:DNI", (req, res) => {
+    var DNI = req.params.DNI;
+    var updatedCarnet = req.body;
+    console.log(Date()+" - PUT edit/"+DNI);
+ 
+    if(DNI != updatedCarnet.DNI){
+        console.log("El carnet a actualizar no existe");
+        res.sendStatus(409);
+        return;
+    }
+ 
+    Carnet.update({"DNI": DNI},updatedCarnet, (err,updateResult)=>{
+        if(err){
+            console.error("Error accediendo a la BD");
+            res.sendStatus(500);
+        }else{
+            if(updateResult.n == 0) {
+                res.sendStatus(404);
+            } else {
+                res.sendStatus(200);
+            }
+        }
+    });
 });
 
 //Borrar un carnet

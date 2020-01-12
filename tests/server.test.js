@@ -50,16 +50,16 @@ describe("Carnets API", () => {
         const carnet = new Carnet({name:"jesus", surname:"torres", valido:true, DNI: 12});
 
         let dbInsert;
-        //let dbFindOne;
+        let dbFindOne;
 
         beforeEach(() => {
-           // dbFindOne = jest.spyOn(Carnet, "findOne");
+           dbFindOne = jest.spyOn(Carnet, "findOne");
             dbInsert = jest.spyOn(Carnet, "create");
         });
 
-        //it('should enter', () => {
-         //   dbFindOne.mockImplementation(carnet.DNI);
-        //});
+        it('should enter', () => {
+            dbFindOne.mockImplementation(carnet.DNI);
+        });
         
         it('Should add new carnet if everything is fine', () => {
                 dbInsert.mockImplementation((c, callback) => {

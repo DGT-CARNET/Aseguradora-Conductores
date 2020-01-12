@@ -46,7 +46,7 @@ describe("Carnets API", () => {
 
     });
 
-    describe('POST /carnets', () => {
+    /*describe('POST /carnets', () => {
         const carnet = new Carnet({name:"jesus", surname:"torres", valido:true, DNI: 12});
 
         let dbInsert;
@@ -84,5 +84,5 @@ describe("Carnets API", () => {
             });
         });
         
-    });
+    });*/
 });

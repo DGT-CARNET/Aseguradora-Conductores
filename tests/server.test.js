@@ -46,14 +46,15 @@ describe("Carnets API", () => {
 
     });
 
-    /*describe('POST /carnets', () => {
+    describe('POST /carnets', () => {
         const carnet = new Carnet({name:"jesus", surname:"torres", valido:true, DNI: 12});
+        const carnet2 = new Carnet({name:"Manuel", surname:"SinDNI", valido:false, DNI: ""});
 
         let dbInsert;
         let dbFindOne;
 
         beforeEach(() => {
-           dbFindOne = jest.spyOn(Carnet, "findOne");
+            dbFindOne = jest.spyOn(Carnet, "findOne");
             dbInsert = jest.spyOn(Carnet, "create");
         });
 
@@ -61,18 +62,15 @@ describe("Carnets API", () => {
             dbFindOne.mockImplementation(carnet.DNI);
         });
         
-        it('Should add new carnet if everything is fine', () => {
-                dbInsert.mockImplementation((c, callback) => {
-                callback(false);
+        it('Should return 403 if there is a Problem with DNI', () =>{
+            dbInsert.mockImplementation((c, callback) => {
+                callback(true);
             });
 
-            return request(app).post('/traffic_management').send(carnet).then((response) => {
-                expect(response.statusCode).toBe(201);
-                //expect(dbInsert).toBeCalledWith(carnet, expect.any(Function));
+            return request(app).post('/traffic_management').send(carnet2).then((response) => {
+                expect(response.statusCode).toBe(403);
             });
         });
-
-    
 
         it('Should return 500 if there is a Problem with db', () =>{
             dbInsert.mockImplementation((c, callback) => {
@@ -82,7 +80,6 @@ describe("Carnets API", () => {
             return request(app).post('/traffic_management').send(carnet).then((response) => {
                 expect(response.statusCode).toBe(500);
             });
-        });
-        
-    });*/
+        }); 
+    });
 });

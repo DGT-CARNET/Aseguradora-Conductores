@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser =require('body-parser');
 const Carnet = require('./carnets.js');
 const passport = require('passport');
+require('./passport.js');
 
 var port = 3000;
 var BASE_API_PATH= "/traffic_management";

@@ -1,6 +1,7 @@
 const app = require('../server.js');
 const Carnet = require('../carnets.js');
 const request = require('supertest');
+const ApiKey = require('../apikeys');
 
 describe("Hello world tests", () => {
     it("Should do an stupid test", () => {
@@ -31,14 +32,24 @@ describe("Carnets API", () => {
                 new Carnet({"name":"POT","surname":"Poter","valido":false,"DNI":"2"})
             ];
 
+            const user = {
+                user: "test",
+                apikey: 1
+            }
+
             dbFind = jest.spyOn(Carnet, "find");
             dbFind.mockImplementation((query, callback) => {
                 callback(null, carnets);
             });
+
+            auth = jest.spyOn(ApiKey, "findOne");
+            auth.mockImplementation((query, callback) => {
+                callback(null, new ApiKey(user));
+            });
         });
 
         it('Should return all carnets', () => {
-            return request(app).get('/traffic_management').then((response) => {
+            return request(app).get('/traffic_management').set('apikey', 'test').then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(dbFind).toBeCalledWith({}, expect.any(Function));
             });

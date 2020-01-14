@@ -1,13 +1,14 @@
-//const db = require('./db.js');
 var express = require('express');
 var bodyParser =require('body-parser');
 const Carnet = require('./carnets.js');
+const passport = require('passport');
 
 var port = 3000;
 var BASE_API_PATH= "/traffic_management";
 
 var app = express();
 app.use(bodyParser.json());
+app.use(passport.initialize());
 
 //Pagina principal
 app.get("/" , (req,res) =>{
@@ -15,7 +16,9 @@ app.get("/" , (req,res) =>{
 });
 
 //Listado de carnets
-app.get(BASE_API_PATH, (req, res) => {
+app.get(BASE_API_PATH, 
+    passport.authenticate('localapikey', {session:false}),
+    (req, res) => {
     console.log(Date() + "- GET /carnets_list");
 
     Carnet.find({}, (err, carnets) => {

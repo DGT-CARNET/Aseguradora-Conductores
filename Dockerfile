@@ -12,6 +12,9 @@ COPY server.js .
 COPY db.js .
 COPY carnets.js .
 COPY jest.config.js .
+COPY passport.js .
+COPY apikeys.js .
+COPY setupbd.js .
 #COPY test/server.test.js .
 
 EXPOSE 3001

@@ -13,7 +13,7 @@ install:
     - npm i core-util-is
 script:
     - npm test
-    - docker build -t aseguradora-conductores .
+    - docker build -t aseguradora-conductores . 
 deploy:
     provider: script
     skip_cleanup: true

@@ -12,8 +12,10 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 
 //Pagina principal
-app.get("/" , (req,res) =>{
-     res.send("<html><body><h1>CARNETS API</h1></body></html>");
+app.get("/" ,
+    passport.authenticate('localapikey', {session:false}),
+    (req,res) =>{
+    res.send("<html><body><h1>CARNETS API</h1></body></html>");
 });
 
 //Listado de carnets
@@ -35,7 +37,9 @@ app.get(BASE_API_PATH,
 });
 
 //Lista un carnet
-app.get(BASE_API_PATH + "/:DNI", (req, res) => {
+app.get(BASE_API_PATH + "/:DNI",
+    passport.authenticate('localapikey', {session:false}),
+    (req, res) => {
     console.log(Date() + "- GET /list_one");
 
     Carnet.find({DNI: req.params.DNI}, (err, carnets) => {
@@ -49,7 +53,9 @@ app.get(BASE_API_PATH + "/:DNI", (req, res) => {
 });
 
 //Añadir un carnet
-app.post(BASE_API_PATH, (req, res) => {
+app.post(BASE_API_PATH, 
+    passport.authenticate('localapikey', {session:false}),
+    (req, res) => {
     console.log(Date() + "- POST /new_carnet");
     var carnet = req.body;
     //TODO: Comprobar que el DNI es valido y que no existe ya en BD
@@ -77,7 +83,9 @@ app.post(BASE_API_PATH, (req, res) => {
 });
 
 //Retirar un carnet
-app.put(BASE_API_PATH + "/retire/:DNI", (req,res)=>{
+app.put(BASE_API_PATH + "/retire/:DNI", 
+    passport.authenticate('localapikey', {session:false}),
+    (req,res)=>{
     //Añadir control de errores
     console.log(Date() + "- PUT /retire_carnet");
     Carnet.findOneAndUpdate({DNI: req.params.DNI},{ valid: "false"},{new: true}).then(function(carnet){
@@ -87,7 +95,9 @@ app.put(BASE_API_PATH + "/retire/:DNI", (req,res)=>{
 });
 
 //Cambiar validez de un carnet
-app.put(BASE_API_PATH + "/revalidate/:DNI", (req,res)=>{
+app.put(BASE_API_PATH + "/revalidate/:DNI", 
+    passport.authenticate('localapikey', {session:false}),
+    (req,res)=>{
     //Añadir control de errores
     console.log(Date() + "- PUT /revalidate_carnet");
     Carnet.findOneAndUpdate({DNI: req.params.DNI},{ valid: "true"},{new: true}).then(function(carnet){
@@ -97,7 +107,9 @@ app.put(BASE_API_PATH + "/revalidate/:DNI", (req,res)=>{
     res.sendStatus(200);
 });
 
-app.put(BASE_API_PATH + "/edit/:DNI", (req, res) => {
+app.put(BASE_API_PATH + "/edit/:DNI", 
+    passport.authenticate('localapikey', {session:false}),
+    (req, res) => {
     var DNI = req.params.DNI;
     var updatedCarnet = req.body;
     console.log(Date()+" - PUT edit/"+DNI);
@@ -123,7 +135,9 @@ app.put(BASE_API_PATH + "/edit/:DNI", (req, res) => {
 });
 
 //Borrar un carnet
-app.delete(BASE_API_PATH + "/remove/:DNI", (req,res)=>{
+app.delete(BASE_API_PATH + "/remove/:DNI", 
+    passport.authenticate('localapikey', {session:false}),
+    (req,res)=>{
     //Añadir control de errores
     //Comprobar si existe el carnet en BD
     console.log(Date() + "- DELETE /remove_carnet");

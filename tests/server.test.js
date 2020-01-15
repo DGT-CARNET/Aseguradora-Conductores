@@ -16,7 +16,7 @@ describe("Hello world tests", () => {
 describe("Carnets API", () => {
     describe("GET /", () => {
         it("Should return an HTML document", () => {
-            request(app).get("/").then((response) => {
+            request(app).get("/").set('apikey', 'test').then((response) => {
                 expect(response.status).toBe(200);
                 expect(response.type).toEqual(expect.stringContaining("html"));
                 expect(response.text).toEqual(expect.stringContaining("h1"));
@@ -78,7 +78,7 @@ describe("Carnets API", () => {
                 callback(true);
             });
 
-            return request(app).post('/traffic_management').send(carnet2).then((response) => {
+            return request(app).post('/traffic_management').set('apikey', 'test').send(carnet2).then((response) => {
                 expect(response.statusCode).toBe(403);
             });
         });
@@ -88,7 +88,7 @@ describe("Carnets API", () => {
                 callback(true);
             });
 
-            return request(app).post('/traffic_management').send(carnet).then((response) => {
+            return request(app).post('/traffic_management').set('apikey', 'test').send(carnet).then((response) => {
                 expect(response.statusCode).toBe(500);
             });
         }); 

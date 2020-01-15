@@ -5,7 +5,7 @@ const passport = require('passport');
 require('./passport.js');
 
 var port = 3000;
-var BASE_API_PATH= "/traffic_management";
+var BASE_API_PATH= "/api/v1";
 
 var app = express();
 app.use(bodyParser.json());
@@ -19,7 +19,7 @@ app.get("/" ,
 });
 
 //Listado de carnets
-app.get(BASE_API_PATH, 
+app.get(BASE_API_PATH+"/carnets", 
     passport.authenticate('localapikey', {session:false}),
     (req, res) => {
     console.log(Date() + "- GET /carnets_list");
@@ -37,7 +37,7 @@ app.get(BASE_API_PATH,
 });
 
 //Lista un carnet
-app.get(BASE_API_PATH + "/:DNI",
+app.get(BASE_API_PATH + "/carnets/:DNI",
     passport.authenticate('localapikey', {session:false}),
     (req, res) => {
     console.log(Date() + "- GET /list_one");
@@ -53,7 +53,7 @@ app.get(BASE_API_PATH + "/:DNI",
 });
 
 //Añadir un carnet
-app.post(BASE_API_PATH, 
+app.post(BASE_API_PATH+"/carnets", 
     passport.authenticate('localapikey', {session:false}),
     (req, res) => {
     console.log(Date() + "- POST /new_carnet");
@@ -83,7 +83,7 @@ app.post(BASE_API_PATH,
 });
 
 //Retirar un carnet
-app.put(BASE_API_PATH + "/retire/:DNI", 
+app.put(BASE_API_PATH + "/carnets/retire/:DNI", 
     passport.authenticate('localapikey', {session:false}),
     (req,res)=>{
     //Añadir control de errores
@@ -95,7 +95,7 @@ app.put(BASE_API_PATH + "/retire/:DNI",
 });
 
 //Cambiar validez de un carnet
-app.put(BASE_API_PATH + "/revalidate/:DNI", 
+app.put(BASE_API_PATH + "/carnets/revalidate/:DNI", 
     passport.authenticate('localapikey', {session:false}),
     (req,res)=>{
     //Añadir control de errores
@@ -107,7 +107,7 @@ app.put(BASE_API_PATH + "/revalidate/:DNI",
     res.sendStatus(200);
 });
 
-app.put(BASE_API_PATH + "/edit/:DNI", 
+app.put(BASE_API_PATH + "/carnets/edit/:DNI", 
     passport.authenticate('localapikey', {session:false}),
     (req, res) => {
     var DNI = req.params.DNI;
@@ -135,7 +135,7 @@ app.put(BASE_API_PATH + "/edit/:DNI",
 });
 
 //Borrar un carnet
-app.delete(BASE_API_PATH + "/remove/:DNI", 
+app.delete(BASE_API_PATH + "/carnets/remove/:DNI", 
     passport.authenticate('localapikey', {session:false}),
     (req,res)=>{
     //Añadir control de errores

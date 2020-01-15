@@ -14,7 +14,7 @@ app.use(passport.initialize());
 //Pagina principal
 app.get("/" ,
     passport.authenticate('localapikey', {session:false}),
-    (req,res) =>{
+    (req, res) => {
     res.send("<html><body><h1>CARNETS API</h1></body></html>");
 });
 

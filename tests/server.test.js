@@ -49,7 +49,7 @@ describe("Carnets API", () => {
         });
 
         it('Should return all carnets', () => {
-            return request(app).get('/traffic_management').set('apikey', 'test').then((response) => {
+            return request(app).get('/api/v1/carnets').set('apikey', 'test').then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(dbFind).toBeCalledWith({}, expect.any(Function));
             });

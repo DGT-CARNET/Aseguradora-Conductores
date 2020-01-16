@@ -78,7 +78,7 @@ describe("Carnets API", () => {
                 callback(true);
             });
 
-            return request(app).post('/traffic_management').set('apikey', 'test').send(carnet2).then((response) => {
+            return request(app).post('/api/v1/carnets').set('apikey', 'test').send(carnet2).then((response) => {
                 expect(response.statusCode).toBe(403);
             });
         });
@@ -88,7 +88,7 @@ describe("Carnets API", () => {
                 callback(true);
             });
 
-            return request(app).post('/traffic_management').set('apikey', 'test').send(carnet).then((response) => {
+            return request(app).post('/api/v1/carnets').set('apikey', 'test').send(carnet).then((response) => {
                 expect(response.statusCode).toBe(500);
             });
         }); 

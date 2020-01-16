@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser =require('body-parser');
 const Carnet = require('./carnets.js');
 const passport = require('passport');
+var request = require('request');
 require('./passport.js');
 
 var port = 3000;
@@ -47,7 +48,8 @@ app.get(BASE_API_PATH + "/carnets/:DNI",
             console.log(Date()+"-"+err);
             res.sendStatus(500);
         }else{
-            res.sendStatus(201);
+            res.send(carnets)
+            res.sendStatus(200);
         }
     });
 });
@@ -141,10 +143,33 @@ app.delete(BASE_API_PATH + "/carnets/remove/:DNI",
     //Añadir control de errores
     //Comprobar si existe el carnet en BD
     console.log(Date() + "- DELETE /remove_carnet");
-    Carnet.findOneAndRemove({DNI : req.params.DNI}).then(function(carnet){
-        res.send(carnet)
+    Carnet.findOneAndRemove({DNI : req.params.DNI}).then(function(carnet,err){
+        if(err){
+            console.log(err);
+            res.sendStatus(409)
+        }
+        else{
+            request("https://apimultas.herokuapp.com/api/v1/multas/deleteAll/"+req.params.DNI+"/?apikey=1b72fe87-acce-4e61-8f93-e8e83bc2ebd5", function (error, response) {
+                console.log('error:', error);
+                console.log('statusCode:', response && response.statusCode);
+            
+            });
+            res.sendStatus(200)
+            res.send(carnet)
+        }
     });
-    res.sendStatus(200);
+
+   
+
+    // const request= new Request("https://apimultas.herokuapp.com/api/v1/multas/deleteAll/"+req.params.DNI+"/?apikey=1b72fe87-acce-4e61-8f93-e8e83bc2ebd5",{
+    //     method:'DELETE',
+    //     headers:{'Content-Type':'text/plain; charset=utf-8'}
+    //     });
+
+    // return fetch(request).then(response=>{
+    //     return response.json();          
+    // });
+
 });
 
 module.exports = app;

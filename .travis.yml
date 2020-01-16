@@ -5,6 +5,8 @@ node_js:
 services:
     - docker
     - mongodb
+env:
+    -MONGO_URL='mongodb://localhost/carnets'
 before_install:
     - wget -q0- https://toolbelt.heroku.com/install.sh | sh
 install:

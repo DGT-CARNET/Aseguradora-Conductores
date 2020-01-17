@@ -48,8 +48,8 @@ app.get(BASE_API_PATH + "/carnets/:DNI",
             console.log(Date()+"-"+err);
             res.sendStatus(500);
         }else{
-            res.send(carnets)
             res.sendStatus(200);
+            res.send(carnets)
         }
     });
 });
@@ -101,12 +101,24 @@ app.put(BASE_API_PATH + "/carnets/revalidate/:DNI",
     passport.authenticate('localapikey', {session:false}),
     (req,res)=>{
     //Añadir control de errores
+    var dni = req.params.DNI;
+    var nPuntosRecupera=2;
     console.log(Date() + "- PUT /revalidate_carnet");
-    Carnet.findOneAndUpdate({DNI: req.params.DNI},{ valid: "true"},{new: true}).then(function(carnet){
+    Carnet.findOneAndUpdate({DNI: dni},{ valid: "true"},{new: true}).then(function(carnet){
+        const options = {
+            url: 'https://api-puntos-dgt.herokuapp.com/api/v1/puntos/'+dni+'/recupera?npuntos='+nPuntosRecupera,
+            headers: {
+              'x-api-key': 'eiWee8ep9due4deeshoa8Peichai8Eih',
+              'Content-Type':'application/json'
+            }
+          };
+        request.post(options, function (error, response) {
+            console.log('error:', error);
+            console.log('statusCode:', response && response.statusCode);       
+        });
         res.send(carnet)
     });
-    //Llamar metodo de poner puntos al minimo
-    res.sendStatus(200);
+        res.sendStatus(200);
 });
 
 app.put(BASE_API_PATH + "/carnets/edit/:DNI", 
@@ -143,19 +155,29 @@ app.delete(BASE_API_PATH + "/carnets/remove/:DNI",
     //Añadir control de errores
     //Comprobar si existe el carnet en BD
     console.log(Date() + "- DELETE /remove_carnet");
-    Carnet.findOneAndRemove({DNI : req.params.DNI}).then(function(carnet,err){
+    var dni = req.params.DNI;    
+    Carnet.findOneAndRemove({DNI : dni}).then(function(carnet,err){
         if(err){
             console.log(err);
             res.sendStatus(409)
         }
         else{
-            request("https://apimultas.herokuapp.com/api/v1/multas/deleteAll/"+req.params.DNI+"/?apikey=1b72fe87-acce-4e61-8f93-e8e83bc2ebd5", function (error, response) {
-                console.log('error:', error);
-                console.log('statusCode:', response && response.statusCode);
-            
-            });
+            // request.delete("https://apimultas.herokuapp.com/api/v1/multas/deleteAll/"+dni+"/?apikey=1b72fe87-acce-4e61-8f93-e8e83bc2ebd5", function (error, response) {
+            //     console.log('error:', error);
+            //     console.log('statusCode:', response && response.statusCode);
+            // });
+
+            // const options = {
+            //     url: 'https://api-puntos-dgt.herokuapp.com/api/v1/puntos/'+dni,
+            //     headers: {
+            //       'x-api-key': 'eiWee8ep9due4deeshoa8Peichai8Eih'
+            //     }
+            //   };
+            // request.delete(options, function (error, response) {
+            //     console.log('error:', error);
+            //     console.log('statusCode:', response && response.statusCode);
+            // });
             res.sendStatus(200)
-            res.send(carnet)
         }
     });
 

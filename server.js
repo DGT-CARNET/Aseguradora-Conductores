@@ -121,6 +121,7 @@ app.put(BASE_API_PATH + "/carnets/revalidate/:DNI",
         res.sendStatus(200);
 });
 
+//Edita un carnet
 app.put(BASE_API_PATH + "/carnets/edit/:DNI", 
     passport.authenticate('localapikey', {session:false}),
     (req, res) => {
@@ -180,17 +181,6 @@ app.delete(BASE_API_PATH + "/carnets/remove/:DNI",
             res.sendStatus(200)
         }
     });
-
-   
-
-    // const request= new Request("https://apimultas.herokuapp.com/api/v1/multas/deleteAll/"+req.params.DNI+"/?apikey=1b72fe87-acce-4e61-8f93-e8e83bc2ebd5",{
-    //     method:'DELETE',
-    //     headers:{'Content-Type':'text/plain; charset=utf-8'}
-    //     });
-
-    // return fetch(request).then(response=>{
-    //     return response.json();          
-    // });
 
 });
 
